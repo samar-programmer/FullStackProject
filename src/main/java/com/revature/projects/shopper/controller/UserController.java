@@ -20,10 +20,10 @@ import com.revature.projects.shopper.model.EcommerceUser;
 
 
 
-
-@RestController
-//@RequestMapping("/user")
 @CrossOrigin(origins="http://localhost:4200")
+@RestController
+@RequestMapping("/api/product")
+
 public class UserController {
 	
 	@Autowired
