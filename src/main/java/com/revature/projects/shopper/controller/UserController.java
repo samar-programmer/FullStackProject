@@ -7,7 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +29,8 @@ public class UserController {
 	@Autowired
 	private EcommerceServiceInterface service;
 	
-	EcommerceUser ecommerceuser;
+	EcommerceUser ecommerceuser=new EcommerceUser();
+	EcommerceUser ecommerceuser1=new EcommerceUser();
 	
 	Random random=new Random(1000);
 	
@@ -58,25 +61,39 @@ public class UserController {
 	@PostMapping("/signUp")
 	public String signUpProfile(@RequestBody EcommerceUser ecommerceuser) throws Exception
 	{
-		
+		int i=0;
 		String tempEmailId=ecommerceuser.getEmail();
+		String tempPass=ecommerceuser.getPassword();
 		System.out.println(ecommerceuser.getPassword());
+	
+		
 		if(tempEmailId !=null && !"".equals(tempEmailId))
 		{
 			ecommerceuser=service.fetchUserByEmailId(tempEmailId);
-			if(ecommerceuser!=null)
+		//	System.out.println(ecommerceuser.getPassword());
+			if(ecommerceuser==null)
 			{
-				throw new Exception("User with "+tempEmailId+"  already Exists");
+				
+				ecommerceuser1.setEmail(tempEmailId);
+				ecommerceuser1.setPassword(tempPass);
+				System.out.println(ecommerceuser1.getPassword());
+				System.out.println("Hello there");
+				 i=service.signUpProfileService(ecommerceuser1);
+				
 			}
-		}
+			else
+			{
+				throw new Exception("User with "+tempEmailId+" already Exists");
+			}
+			}
 		
-		System.out.println(ecommerceuser.getPassword());
 		
-		int i=service.signUpProfileService(ecommerceuser);
+		
+		
 		
 		if(i>0)
 		{
-			System.out.println(ecommerceuser.getPassword());
+			//System.out.println(ecommerceuser.getPassword());
 			
 		return "User Signed UP";
 		}
@@ -84,7 +101,7 @@ public class UserController {
 		else
 		{
 			return "Could not able to Sign Up";
-		}
+	}
 	}
 	
 	
@@ -99,13 +116,37 @@ public class UserController {
 		
 		if(tempEmailId !=null && tempPass!=null)
 		{
+			System.out.println("hello admin");
+			if(tempEmailId.equals("Admin@gmail.com"))
+			{
+				System.out.println("hello admin");
+			
 			ecommerceuser=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
+			ecommerceuser1.setStatus("ADMIN");
+			int i=service.saveStatus(ecommerceuser1);
+			}
+			else
+			{
+				System.out.println("hello user");
+				
+				ecommerceuser=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
+				ecommerceuser1.setStatus("USER");
+				int i=service.saveStatus(ecommerceuser1);
+			}
 			
 		}
 		
-		if(ecommerceuser!=null)
+		if(ecommerceuser1!=null)
 		{
-		return "Login Successful";
+			System.out.println(tempEmailId);
+			if(tempEmailId.equals("Admin@gmail.com"))
+			{
+				return "Admin Logged IN";
+			}
+			else
+			{
+				return "User Logged IN";
+			}
 		}
 		else
 		{
@@ -136,6 +177,28 @@ public class UserController {
 		{
 			//session.setAttribute("message","Check Your Email Id !!!" );
 		return "Forgot Email";
+		}
+	}
+	
+	
+	@PutMapping("/editProfile/{email}")
+	public String editProfile(@PathVariable("email")String email,@RequestBody EcommerceUser ecommerceuser)throws Exception
+	{
+//		String tempEmailId=ecommerceuser.getEmail();
+//		System.out.println(tempEmailId);
+//		if(tempEmailId !=null)
+//		{
+			ecommerceuser=service.updateUserByEmailId(ecommerceuser);
+			
+		//}
+		
+		if(ecommerceuser!=null)
+		{
+			return "Database Updated";
+		}
+		else
+		{
+		throw new Exception("Could not Update Your Database");
 		}
 	}
 	

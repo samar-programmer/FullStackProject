@@ -15,4 +15,10 @@ public interface EcommerceServiceInterface {
 
 	public boolean sendEmail(String subject, String message, String to);
 
+	//public EcommerceUser updateUserByEmailId(String tempEmailId);
+
+	public EcommerceUser updateUserByEmailId( EcommerceUser ecommerceuser);
+
+	public int saveStatus(EcommerceUser ecommerceuser1);
+
 }

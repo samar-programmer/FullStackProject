@@ -26,6 +26,8 @@ public class EcommerceUser {
 	private String address;
 	private long otp;
 	private long mobilenumber;
+	private String status;
+	
 	
 	
 	
@@ -85,5 +87,10 @@ public class EcommerceUser {
 		this.mobilenumber = mobilenumber;
 	}
 	
-	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

@@ -58,7 +58,7 @@ public class EcommerceService implements EcommerceServiceInterface{
 		
 		boolean f=false;
 		
-		String from="manojselvi529@gmail.com";
+		String from="Admin@gmail.com";
 		
 		String host="smtp.gmail.com";
 		
@@ -101,6 +101,32 @@ public class EcommerceService implements EcommerceServiceInterface{
 		
 		return f;
 	}
+
+	@Override
+	public EcommerceUser updateUserByEmailId( EcommerceUser ecommerceuser) {
+		
+		repository.saveAndFlush(ecommerceuser);
+		
+		return ecommerceuser;
+	}
+//
+//	@Override
+//	public int saveStatus(EcommerUser ecommerceuser1) {
+//		
+//		 repository.save(flag);
+//		 
+//		 return 1;
+//	}
+
+	@Override
+	public int saveStatus(EcommerceUser ecommerceuser1) {
+		
+		repository.save(ecommerceuser1);
+		
+		return 1;
+	}
+
+	
 
 	
 
