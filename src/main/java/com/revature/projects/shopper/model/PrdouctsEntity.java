@@ -23,4 +23,14 @@ public class PrdouctsEntity {
     private String addeddate;
     private String productPrice;
     private String productDiscountPrice;
+    
+	
+	/*
+	 * @OneToOne
+	 * 
+	 * @JoinColumn(name = "cart", referencedColumnName = "productIdF") private
+	 * CartEntity cart;
+	 */
+	 
+	 
 }
