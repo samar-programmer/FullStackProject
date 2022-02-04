@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.revature.projects.shopper.interfaces.ProductServiceInterface;
 import com.revature.projects.shopper.interfaces.SearchServiceInterface;
 import com.revature.projects.shopper.model.PrdouctsEntity;
+import com.revature.projects.shopper.repository.ProductRepositoryInterface;
 import com.revature.projects.shopper.repository.SearchProductRepository;
 
 @Service
