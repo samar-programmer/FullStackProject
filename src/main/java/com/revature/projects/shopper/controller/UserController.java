@@ -22,7 +22,7 @@ import com.revature.projects.shopper.model.EcommerceUser;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/customer")
 
 public class UserController {
 	
@@ -36,25 +36,25 @@ public class UserController {
 	
 	HttpSession session;
 	
-	@PostMapping("/register")
-	public String createProfile(@RequestBody EcommerceUser ecommerceuser)
-	{
-		
-		
-		
-		ecommerceuser=service.createProfileService(ecommerceuser);
-		
-		if(ecommerceuser!=null)
-		{
-	
-		return "Profile Created";
-		}
-		
-		else
-		{
-			return "Could not Create Profile";
-		}
-	}
+//	@PostMapping("/register")
+//	public String createProfile(@RequestBody EcommerceUser ecommerceuser)
+//	{
+//		
+//		
+//		
+//		ecommerceuser=service.createProfileService(ecommerceuser);
+//		
+//		if(ecommerceuser!=null)
+//		{
+//	
+//		return "Profile Created";
+//		}
+//		
+//		else
+//		{
+//			return "Could not Create Profile";
+//		}
+//	}
 	
 	
 	
@@ -116,27 +116,35 @@ public class UserController {
 		
 		if(tempEmailId !=null && tempPass!=null)
 		{
-			System.out.println("hello admin");
+		
 			if(tempEmailId.equals("Admin@gmail.com"))
 			{
 				System.out.println("hello admin");
 			
 			ecommerceuser=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
+			if(ecommerceuser!=null)
+			{
+			
 			ecommerceuser1.setStatus("ADMIN");
 			int i=service.saveStatus(ecommerceuser1);
+			 }
 			}
 			else
 			{
 				System.out.println("hello user");
 				
 				ecommerceuser=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
+				if(ecommerceuser!=null)
+				{
+			
 				ecommerceuser1.setStatus("USER");
 				int i=service.saveStatus(ecommerceuser1);
+				}
 			}
 			
 		}
 		
-		if(ecommerceuser1!=null)
+		if((ecommerceuser!=null) && (ecommerceuser1!=null))
 		{
 			System.out.println(tempEmailId);
 			if(tempEmailId.equals("Admin@gmail.com"))
@@ -150,7 +158,7 @@ public class UserController {
 		}
 		else
 		{
-		 throw new Exception("login failed");
+		 throw new Exception("login failed!!!! SIGN UP FIRST");
 		}
 	}
 	
@@ -160,12 +168,15 @@ public class UserController {
 	{
 		int  otp=random.nextInt(999999);
 		
-		String subject="OTP from SHOPFLY";
-		String message="<h1> OTP = "+otp+" </h1>";
+		String subject="OTP from SHOPPER";
+		String message="OTP to Change Your Password is = "+otp;
 		System.out.println("Hello otp");
 		System.out.println(ecommerceuser.getEmail());	
 		String to=ecommerceuser.getEmail();
 	
+		System.out.println(message);
+		System.out.println(to);
+		
 		boolean flag=this.service.sendEmail(subject,message,to);
 		
 		if(flag)
@@ -184,15 +195,18 @@ public class UserController {
 	@PutMapping("/editProfile/{email}")
 	public String editProfile(@PathVariable("email")String email,@RequestBody EcommerceUser ecommerceuser)throws Exception
 	{
-//		String tempEmailId=ecommerceuser.getEmail();
-//		System.out.println(tempEmailId);
-//		if(tempEmailId !=null)
-//		{
-			ecommerceuser=service.updateUserByEmailId(ecommerceuser);
-			
-		//}
+
+		String firstname=ecommerceuser.getFirstname();
+		String lastname=ecommerceuser.getLastname();
+		String password=ecommerceuser.getPassword();
+
+		Long mobilenumber=ecommerceuser.getMobilenumber();
 		
-		if(ecommerceuser!=null)
+		
+			int i=service.updateUserByEmailId(email,password,firstname,lastname,mobilenumber);
+
+		
+		if(i!=0)
 		{
 			return "Database Updated";
 		}
@@ -202,5 +216,21 @@ public class UserController {
 		}
 	}
 	
+//	@PutMapping("/editProfile/{email}")
+//	public String editProfile(@PathVariable("email") String email)throws Exception
+//	{
+//		int i=service.updateUserByEmailId(email);
+//		
+//		if(i!=0)
+//		{
+//			return "Database Updated";
+//		}
+//		else
+//			
+//		{
+//			throw new Exception("Could not Update Your Database");
+//		}
+//		
+//	}
 
 }

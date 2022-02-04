@@ -26,13 +26,13 @@ public class EcommerceService implements EcommerceServiceInterface{
 	
 	
 	
-	@Override
-	public EcommerceUser createProfileService(EcommerceUser user) {
-	
-		repository.save(user);
-		
-		return user;
-	}
+//	@Override
+//	public EcommerceUser createProfileService(EcommerceUser user) {
+//	
+//		repository.save(user);
+//		
+//		return user;
+//	}
 	
 	public EcommerceUser fetchUserByEmailId(String email)
 	{
@@ -58,7 +58,7 @@ public class EcommerceService implements EcommerceServiceInterface{
 		
 		boolean f=false;
 		
-		String from="Admin@gmail.com";
+		String from="manojselvi529@gmail.com";
 		
 		String host="smtp.gmail.com";
 		
@@ -98,17 +98,11 @@ public class EcommerceService implements EcommerceServiceInterface{
 		{
 			e.printStackTrace();
 		}
-		
+		//repository.save(message,to);
 		return f;
 	}
 
-	@Override
-	public EcommerceUser updateUserByEmailId( EcommerceUser ecommerceuser) {
-		
-		repository.saveAndFlush(ecommerceuser);
-		
-		return ecommerceuser;
-	}
+	
 //
 //	@Override
 //	public int saveStatus(EcommerUser ecommerceuser1) {
@@ -126,7 +120,38 @@ public class EcommerceService implements EcommerceServiceInterface{
 		return 1;
 	}
 
+	@Override
+	public EcommerceUser updateUserByEmailId(EcommerceUser ecommerceuser) {
+		
+		repository.saveAndFlush(ecommerceuser);
+		
+		return ecommerceuser;
+	}
+
+	@Override
+	public int updateUserByEmailId(String email, String password, String firstname, String lastname,
+			Long mobilenumber) {
+		
+		 repository.updateUserByEmailId(email,password,firstname,lastname,mobilenumber);
+		 return 1;
+	}
+
+
+
+//	@Override
+//	public int updateUserByEmailId(String email) {
+//		
+//		Optional<EcommerceUser> Update=repository.findByEmailId1(email);
+//		if(Update.isPresent())
+//		{
+//			repository.saveAndFlush(Update.add(password));
+//		}
+//		
+//		return 1;
+//	}
+
 	
+
 
 	
 

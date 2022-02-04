@@ -15,7 +15,7 @@ public class EcommerceUser {
 	
 	@Id
 	 @GeneratedValue(strategy = GenerationType.AUTO)
-	private int user_id;
+	private int userid;
 	
 	@Column(unique=true)
 	private String email;
@@ -24,18 +24,17 @@ public class EcommerceUser {
 	private String lastname;
 	private String password;
 	private String address;
-	private long otp;
-	private long mobilenumber;
 	private String status;
 	
+	private long otp;
+	private long mobilenumber;
 	
 	
-	
-	public int getUser_id() {
-		return user_id;
+	public int getUserid() {
+		return userid;
 	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUser_id(int userid) {
+		this.userid = userid;
 	}
 	
 	public String getEmail() {

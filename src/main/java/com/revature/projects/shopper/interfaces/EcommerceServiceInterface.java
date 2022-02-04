@@ -4,7 +4,7 @@ import com.revature.projects.shopper.model.EcommerceUser;
 
 public interface EcommerceServiceInterface {
 
-	public EcommerceUser createProfileService(EcommerceUser user);
+	//public EcommerceUser createProfileService(EcommerceUser user);
 
 	public EcommerceUser fetchUserByEmailId(String tempEmailId);
 
@@ -17,8 +17,16 @@ public interface EcommerceServiceInterface {
 
 	//public EcommerceUser updateUserByEmailId(String tempEmailId);
 
-	public EcommerceUser updateUserByEmailId( EcommerceUser ecommerceuser);
 
 	public int saveStatus(EcommerceUser ecommerceuser1);
+
+	public EcommerceUser updateUserByEmailId( EcommerceUser ecommerceuser);
+
+	public int updateUserByEmailId(String email, String password, String firstname, String lastname,
+			Long mobilenumber);
+
+
+
+	//public int updateUserByEmailId(String email);
 
 }
