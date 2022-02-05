@@ -45,28 +45,7 @@ public class UserController {
 	
 	HttpServletRequest request; 
 	HttpSession session;
-	
-//	@PostMapping("/register")
-//	public String createProfile(@RequestBody EcommerceUser ecommerceuser)
-//	{
-//		
-//		
-//		
-//		ecommerceuser=service.createProfileService(ecommerceuser);
-//		
-//		if(ecommerceuser!=null)
-//		{
-//	
-//		return "Profile Created";
-//		}
-//		
-//		else
-//		{
-//			return "Could not Create Profile";
-//		}
-//	}
-	
-	
+
 	
 	@PostMapping("/signUp")
 	public String signUpProfile(@RequestBody EcommerceUser ecommerceuser) throws Exception
@@ -168,7 +147,7 @@ public class UserController {
 			}
 			else
 			{
-				return "User "+ecommerceuser.getEmail()+ " Logged IN";
+				return ecommerceuser.getEmail();
 			}
 		}
 		else
@@ -250,9 +229,6 @@ public class UserController {
 
 		Long mobilenumber=ecommerceuser.getMobilenumber();
 		
-		//String email1=(String) session.getAttribute("user");
-		
-		//System.out.println(email1);
 		
 		
 			int i=service.updateUserByEmailId(email,password,firstname,lastname,mobilenumber);
@@ -268,22 +244,6 @@ public class UserController {
 		}
 	}
 	
-//	@PutMapping("/editProfile/{email}")
-//	public String editProfile(@PathVariable("email") String email)throws Exception
-//	{
-//		int i=service.updateUserByEmailId(email);
-//		
-//		if(i!=0)
-//		{
-//			return "Database Updated";
-//		}
-//		else
-//			
-//		{
-//			throw new Exception("Could not Update Your Database");
-//		}
-//		
-//	}
 	
 	
 	@PostMapping("/address")
