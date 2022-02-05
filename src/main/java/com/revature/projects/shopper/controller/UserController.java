@@ -41,6 +41,8 @@ public class UserController {
 	
 	Random random=new Random(1000);
 	
+	
+	
 	HttpServletRequest request; 
 	HttpSession session;
 	
