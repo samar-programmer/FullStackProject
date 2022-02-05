@@ -1,6 +1,7 @@
 package com.revature.projects.shopper.model;
 
 import javax.persistence.*;
+import java.util.*;
 
 
 
@@ -17,13 +18,15 @@ public class EcommerceUser {
 	 @GeneratedValue(strategy = GenerationType.AUTO)
 	private int userid;
 	
+//	 @OneToMany(mappedBy="userid")//,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+//	private List<EcommerceAddress> ecommerceaddress;
+	
 	@Column(unique=true)
 	private String email;
 	
 	private String firstname;
 	private String lastname;
 	private String password;
-	private String address;
 	private String status;
 	
 	private long otp;
@@ -33,7 +36,7 @@ public class EcommerceUser {
 	public int getUserid() {
 		return userid;
 	}
-	public void setUser_id(int userid) {
+	public void setUserid(int userid) {
 		this.userid = userid;
 	}
 	
@@ -65,12 +68,6 @@ public class EcommerceUser {
 		this.password = password;
 	}
 	
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
 	
 	public long getOtp() {
 		return otp;

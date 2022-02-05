@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.projects.shopper.interfaces.EcommerceServiceInterface;
+import com.revature.projects.shopper.model.EcommerceAddress;
 import com.revature.projects.shopper.model.EcommerceUser;
+import com.revature.projects.shopper.repository.EcommerceAddressRepository;
 import com.revature.projects.shopper.repository.EcommerceRepository;
 
 
@@ -23,6 +25,8 @@ public class EcommerceService implements EcommerceServiceInterface{
 
 	@Autowired
 	private EcommerceRepository repository;
+	@Autowired
+	private EcommerceAddressRepository addressrepository;
 	
 	
 	
@@ -103,6 +107,66 @@ public class EcommerceService implements EcommerceServiceInterface{
 	}
 
 	
+	
+	@Override
+	public boolean sendPassword(String subject, String tempPassword, String tempEmail) {
+		
+		
+		boolean f=false;
+		
+		String from="manojselvi529@gmail.com";
+		
+		String host="smtp.gmail.com";
+		
+		Properties properties=System.getProperties();
+		
+		
+		properties.put("mail.smtp.host",host);
+		properties.put("mail.smtp.port","465");
+		properties.put("mail.smtp.ssl.enable", "true");
+		properties.put("mail.smtp.auth", "true");
+		
+		Session session=Session.getInstance(properties, new Authenticator()
+				{
+			protected PasswordAuthentication getPasswordAuthentication()
+			{
+				return new PasswordAuthentication("manojselvi529@gmail.com","pasauzpmpmfxoqrj");
+			}
+				});
+		
+		session.setDebug(true);
+		
+		MimeMessage mimemessage=new MimeMessage(session);
+		
+		try
+		{
+			mimemessage.setFrom(from);
+			mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(tempEmail));
+			mimemessage.setSubject(subject);
+			mimemessage.setText("Your PassWord is  "+tempPassword);
+			Transport.send(mimemessage);
+			
+			System.out.println("Sent Success.............");
+			
+			f=true;
+			}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+		return f;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 //
 //	@Override
 //	public int saveStatus(EcommerUser ecommerceuser1) {
@@ -136,6 +200,42 @@ public class EcommerceService implements EcommerceServiceInterface{
 		 return 1;
 	}
 
+	@Override
+	public int updateUserByOtp(String to, long otp) {
+		
+		repository.updateUserByOtp(to,otp);
+		
+		return 1;
+	}
+
+	@Override
+	public EcommerceUser fetchByOtp(long tempOtp) {
+		
+		return repository.fetchByOtp(tempOtp);
+	}
+
+	@Override
+	public int saveAddressService(EcommerceAddress ecommerceaddress) {
+		
+		try
+		{
+		
+		EcommerceUser eu=repository.findByEmailId(ecommerceaddress.getUserdata().getEmail());
+		ecommerceaddress.setUserdata(eu);
+		addressrepository.save(ecommerceaddress);
+		return 1;
+		}
+		
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return 0;
+		}
+		 
+	
+	}
+
+	
 
 
 //	@Override

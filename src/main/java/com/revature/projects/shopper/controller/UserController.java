@@ -2,8 +2,12 @@ package com.revature.projects.shopper.controller;
 
 import java.util.*;
 
-import javax.servlet.http.HttpSession;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.revature.projects.shopper.interfaces.EcommerceServiceInterface;
+import com.revature.projects.shopper.model.EcommerceAddress;
 import com.revature.projects.shopper.model.EcommerceUser;
 
 
@@ -31,9 +37,11 @@ public class UserController {
 	
 	EcommerceUser ecommerceuser=new EcommerceUser();
 	EcommerceUser ecommerceuser1=new EcommerceUser();
+	EcommerceAddress ecommerceaddress=new EcommerceAddress();
 	
 	Random random=new Random(1000);
 	
+	HttpServletRequest request; 
 	HttpSession session;
 	
 //	@PostMapping("/register")
@@ -119,6 +127,7 @@ public class UserController {
 		
 			if(tempEmailId.equals("Admin@gmail.com"))
 			{
+				//request.getSession().setAttribute("user", tempEmailId);
 				System.out.println("hello admin");
 			
 			ecommerceuser=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
@@ -132,6 +141,10 @@ public class UserController {
 			else
 			{
 				System.out.println("hello user");
+				System.out.println(tempEmailId);
+				//session=request.getSession(true);
+				//session.setAttribute("user",tempEmailId);
+				//request.getSession().getAttribute("tempEmailId");
 				
 				ecommerceuser=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
 				if(ecommerceuser!=null)
@@ -153,7 +166,7 @@ public class UserController {
 			}
 			else
 			{
-				return "User Logged IN";
+				return "User "+ecommerceuser.getEmail()+ " Logged IN";
 			}
 		}
 		else
@@ -166,7 +179,7 @@ public class UserController {
 	@PostMapping("/send-otp")
 	public String sendOTP(@RequestBody EcommerceUser ecommerceuser)
 	{
-		int  otp=random.nextInt(999999);
+		long  otp=random.nextInt(999999);
 		
 		String subject="OTP from SHOPPER";
 		String message="OTP to Change Your Password is = "+otp;
@@ -179,6 +192,9 @@ public class UserController {
 		
 		boolean flag=this.service.sendEmail(subject,message,to);
 		
+		System.out.println(to);
+		int i=service.updateUserByOtp(to,otp);
+		
 		if(flag)
 		{
 			//session.setAttribute("otp", otp);
@@ -187,9 +203,36 @@ public class UserController {
 		else
 		{
 			//session.setAttribute("message","Check Your Email Id !!!" );
-		return "Forgot Email";
+		return "Wrong Credentials";
 		}
 	}
+	
+	@PostMapping("/verify-otp")
+	public String verifyOtp(@RequestBody EcommerceUser ecommerceuser)
+	{
+		long tempOtp=ecommerceuser.getOtp();
+		
+		if(tempOtp!=0)
+		{
+		ecommerceuser=service.fetchByOtp(tempOtp);
+		}
+		String tempEmail=ecommerceuser.getEmail();
+		String tempPassword=ecommerceuser.getPassword();
+		String subject="PASSWORD From SHOPPER";
+		
+		boolean flag=this.service.sendPassword(subject,tempPassword,tempEmail);
+		
+		
+		if(ecommerceuser!=null)
+		{
+		return "OTP	 Verified !!! See Your Email For Password";
+		}
+		else
+		{
+			return "Incorrect OTP";
+		}
+	}
+	
 	
 	
 	@PutMapping("/editProfile/{email}")
@@ -201,6 +244,10 @@ public class UserController {
 		String password=ecommerceuser.getPassword();
 
 		Long mobilenumber=ecommerceuser.getMobilenumber();
+		
+		//String email1=(String) session.getAttribute("user");
+		
+		//System.out.println(email1);
 		
 		
 			int i=service.updateUserByEmailId(email,password,firstname,lastname,mobilenumber);
@@ -232,5 +279,40 @@ public class UserController {
 //		}
 //		
 //	}
+	
+	
+	@PostMapping("/address")
+	public String saveAddress(@RequestBody EcommerceAddress ecommerceaddress)
+	{
+		System.out.println(ecommerceaddress.getDoorno());
+		
+//		EcommerceUser eu=new EcommerceUser();
+//		eu.setUserid(userid);
+//		ecommerceaddress.setUserdata(eu);
+//		System.out.println(userid);
+		int i=service.saveAddressService(ecommerceaddress);
+		
+		if(i!=0)
+		{
+		return "Address Saved";
+		}
+		else
+		{
+			return "No Address Available";
+		}
+	
+	}
+	
+	
+	
+	
+		@GetMapping("/logOut")
+		public String logout(){
+			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+			HttpSession session = request.getSession();
+			session.invalidate(); 
+			return "LogOut Successfull" ;
+		}
+
 
 }

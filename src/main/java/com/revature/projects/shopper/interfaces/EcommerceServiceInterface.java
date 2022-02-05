@@ -1,5 +1,6 @@
 package com.revature.projects.shopper.interfaces;
 
+import com.revature.projects.shopper.model.EcommerceAddress;
 import com.revature.projects.shopper.model.EcommerceUser;
 
 public interface EcommerceServiceInterface {
@@ -24,6 +25,18 @@ public interface EcommerceServiceInterface {
 
 	public int updateUserByEmailId(String email, String password, String firstname, String lastname,
 			Long mobilenumber);
+
+
+	public int updateUserByOtp(String to, long otp);
+
+
+	public EcommerceUser fetchByOtp(long tempOtp);
+
+
+	public boolean sendPassword(String subject, String tempPassword, String tempEmail);
+
+
+	public int saveAddressService(EcommerceAddress ecommerceaddress);
 
 
 
