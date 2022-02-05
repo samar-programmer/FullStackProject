@@ -26,7 +26,7 @@ public class PaymentController {
 			JSONObject ob=new JSONObject();
 			ob.put("amount", amount*100);
 			ob.put("currency", "INR");
-			ob.put("receipt", "sp_732");
+			ob.put("receipt", "sp_739");
 			
 			
 			order=client.Orders.create(ob);

@@ -24,6 +24,8 @@ public class CartEntity {
 	private Long cartId;
 	
 	private String email;
+	
+	
 	private long productId;
 	private long productQuantity;
 	private long totalPrize;
