@@ -215,6 +215,8 @@ public class UserController {
 		if(tempOtp!=0)
 		{
 		ecommerceuser=service.fetchByOtp(tempOtp);
+
+		
 		}
 		String tempEmail=ecommerceuser.getEmail();
 		String tempPassword=ecommerceuser.getPassword();
@@ -231,6 +233,7 @@ public class UserController {
 		{
 			return "Incorrect OTP";
 		}
+	
 	}
 	
 	
