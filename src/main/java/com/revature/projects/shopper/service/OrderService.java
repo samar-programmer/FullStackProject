@@ -46,7 +46,7 @@ public class OrderService implements OrderServiceInterface{
 		
 		orderRepository.save(order);//order saved
 		
-		List<OrderEntity> order1 = orderRepository.findByEamil(order.getEmail(),"NOT DELIVERED");
+		List<OrderEntity> order1 = orderRepository.findByEamil(order.getEmail(),"NOT DELIVERED-e");
 		
 		int lengthOfOrder = order1.size()-1;
 		
