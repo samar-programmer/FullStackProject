@@ -11,11 +11,10 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-
 public class EcommerceUser {
 	
 	@Id
-	 @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userid;
 	
 //	 @OneToMany(mappedBy="userid")//,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
@@ -31,6 +30,7 @@ public class EcommerceUser {
 	
 	private long otp;
 	private long mobilenumber;
+
 	
 	
 }

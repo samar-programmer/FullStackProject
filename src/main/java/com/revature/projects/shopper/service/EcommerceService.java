@@ -205,6 +205,7 @@ public class EcommerceService implements EcommerceServiceInterface{
 		
 		repository.updateUserByOtp(to,otp);
 		
+		
 		return 1;
 	}
 
@@ -223,6 +224,7 @@ public class EcommerceService implements EcommerceServiceInterface{
 		EcommerceUser eu=repository.findByEmailId(ecommerceaddress.getUserdata().getEmail());
 		ecommerceaddress.setUserdata(eu);
 		addressrepository.save(ecommerceaddress);
+		
 		return 1;
 		}
 		

@@ -1,11 +1,13 @@
 package com.revature.projects.shopper.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import com.revature.projects.shopper.model.PrdouctsEntity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,17 +26,24 @@ public class CartEntity {
 	private Long cartId;
 	
 	private String email;
-	
-	
 	private long productId;
 	private long productQuantity;
 	private long totalPrize;
 	private String productstatus;
-	private long orderdId;
+	
+	
+	@ManyToOne(
+			cascade = CascadeType.ALL
+			)
+	@JoinColumn(
+				name="order_Id",
+				referencedColumnName = "orderId"
+			)
+	private OrderEntity orderIdEntity;
 	
 	
 	
-	/* @OneToOne(mappedBy = "cart") private PrdouctsEntity product ; */
+	
 	 
 	 
 }

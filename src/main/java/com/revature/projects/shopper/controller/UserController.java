@@ -53,7 +53,7 @@ public class UserController {
 		int i=0;
 		String tempEmailId=ecommerceuser.getEmail();
 		String tempPass=ecommerceuser.getPassword();
-		System.out.println(ecommerceuser.getPassword());
+		
 	
 		
 		if(tempEmailId !=null && !"".equals(tempEmailId))
