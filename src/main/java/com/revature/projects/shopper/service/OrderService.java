@@ -48,7 +48,7 @@ public class OrderService implements OrderServiceInterface{
 		
 		for(CartEntity cart : cartEntity) {
 			 cart.setOrderIdEntity(order);
-			 CartRepositoryInterface.save(cart);
+			 CartRepositoryInterface.saveAndFlush(cart);
 		 }
 		
 		return "order Placed";
