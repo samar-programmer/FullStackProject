@@ -143,7 +143,7 @@ public class UserController {
 			System.out.println(tempEmailId);
 			if(tempEmailId.equals("Admin@gmail.com"))
 			{
-				return "Admin Logged IN";
+				return ecommerceuser.getEmail();
 			}
 			else
 			{
