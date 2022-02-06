@@ -160,21 +160,7 @@ public class EcommerceService implements EcommerceServiceInterface{
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-//
-//	@Override
-//	public int saveStatus(EcommerUser ecommerceuser1) {
-//		
-//		 repository.save(flag);
-//		 
-//		 return 1;
-//	}
+
 
 	@Override
 	public int saveStatus(EcommerceUser ecommerceuser1) {
@@ -234,26 +220,6 @@ public class EcommerceService implements EcommerceServiceInterface{
 		 
 	
 	}
-
-	
-
-
-//	@Override
-//	public int updateUserByEmailId(String email) {
-//		
-//		Optional<EcommerceUser> Update=repository.findByEmailId1(email);
-//		if(Update.isPresent())
-//		{
-//			repository.saveAndFlush(Update.add(password));
-//		}
-//		
-//		return 1;
-//	}
-
-	
-
-
-	
 
 	
 
