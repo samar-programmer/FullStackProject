@@ -24,6 +24,7 @@ public class CartController {
 	@Autowired
 	CartServiceInterface cartServiceInterface;
 	
+	
 	@GetMapping("/get-cart")
 	public List<CartDTO> getAllProduct(@RequestParam String email) {
 		List<CartDTO> cartDto =  cartServiceInterface.getCartDetails(email);
