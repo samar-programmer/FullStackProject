@@ -14,6 +14,9 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 	
 	@Query(value = "SELECT ORDER_ID FROM orders_table u WHERE u.email =:email and STATUS=:status ", nativeQuery = true)
 	List<Integer> findByEamil(@Param("email") String email, String status);
+	
+	@Query(value = "SELECT * FROM orders_table u WHERE u.email =:email", nativeQuery = true)
+	List<OrderEntity> findByEamilForOrder(String email);
 	 
 
 //	@Query( value = "select * from orders_table where ORDER_ID = ( select max(ORDER_ID) from orders_table )",  nativeQuery = true)

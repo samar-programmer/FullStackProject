@@ -13,4 +13,6 @@ public interface OrderServiceInterface {
 
 	String setOrderService(OrderDTO orderdata);
 
+	List<OrderEntity> getOrderDetail(String email);
+
 }

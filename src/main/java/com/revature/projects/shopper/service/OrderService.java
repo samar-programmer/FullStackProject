@@ -32,33 +32,44 @@ public class OrderService implements OrderServiceInterface{
 	@Override
 	public String setOrderService(OrderDTO orderdata) {
 		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDateTime now = LocalDateTime.now();
-		String date = dtf.format(now);
-		
-		//List<CartEntity> cartEntity = CartRepositoryInterface.findByEmailAndProductstatus(orderdata.getEmail(), "IN-CART");
-		OrderEntity order=new OrderEntity();  
-		order.setEmail(orderdata.getEmail());
-		order.setOrderdDate(date);
-		order.setStatus("NOT DELIVERED");
-		order.setTotalOrderPrice(orderdata.getTotalPrice());
-		//order.setCartId(cartEntity);
-		
-		orderRepository.save(order);//order saved
-		
-		List<Integer> order1 = orderRepository.findByEamil(orderdata.getEmail(),"NOT DELIVERED");
-		
-		if(order1 != null) {
-			int lengthOfOrder = order1.size()-1;
-			Long orderdId = order1.get(lengthOfOrder).longValue() ;
-			String orderSatus = "ORDERD";
-			String email =orderdata.getEmail();
-			System.out.println("sasi"+orderdId	);
-			CartRepositoryInterface.updateOrderId(orderdId, orderSatus, email, "IN-CART");
+		try {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDateTime now = LocalDateTime.now();
+			String date = dtf.format(now);
+			
+			//List<CartEntity> cartEntity = CartRepositoryInterface.findByEmailAndProductstatus(orderdata.getEmail(), "IN-CART");
+			OrderEntity order=new OrderEntity();  
+			order.setEmail(orderdata.getEmail());
+			order.setOrderdDate(date);
+			order.setStatus("NOT DELIVERED");
+			order.setTotalOrderPrice(orderdata.getTotalPrice());
+			System.out.println("price=====>"+orderdata.getTotalPrice());
+			//order.setCartId(cartEntity);
+			
+			orderRepository.save(order);//order saved
+			
+			List<Integer> order1 = orderRepository.findByEamil(orderdata.getEmail(),"NOT DELIVERED");
+			
+			if(order1 != null) {
+				int lengthOfOrder = order1.size()-1;
+				Long orderdId = order1.get(lengthOfOrder).longValue() ;
+				String orderSatus = "ORDERD";
+				String email =orderdata.getEmail();
+				System.out.println("sasi"+orderdId	);
+				CartRepositoryInterface.updateOrderId(orderdId, orderSatus, email, "IN-CART");
+			}
+		}catch(Exception e) {
+			
 		}
 		 
 		
 		return "order Placed";
+	}
+
+	@Override
+	public List<OrderEntity> getOrderDetail(String email) {
+		// TODO Auto-generated method stub
+		return orderRepository.findByEamilForOrder(email);
 	}
 	
 	

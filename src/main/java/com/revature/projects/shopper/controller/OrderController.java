@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.projects.shopper.dto.OrderDTO;
@@ -24,8 +25,14 @@ public class OrderController {
 	OrderServiceInterface orderServiceInterface;
 	
 	@GetMapping("/get-allOrder")
-	public List<OrderEntity> getAllProduct() {
+	public List<OrderEntity> getAllOrder() {
 		List<OrderEntity> orders =  orderServiceInterface.getOrderDetails();
+		return orders;
+	}
+	
+	@GetMapping("/get-Order")
+	public List<OrderEntity> getOrder(@RequestParam String email) {
+		List<OrderEntity> orders =  orderServiceInterface.getOrderDetail(email);
 		return orders;
 	}
 	
