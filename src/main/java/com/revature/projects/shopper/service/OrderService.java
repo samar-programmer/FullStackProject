@@ -36,7 +36,7 @@ public class OrderService implements OrderServiceInterface{
 		LocalDateTime now = LocalDateTime.now();
 		String date = dtf.format(now);
 		
-		List<CartEntity> cartEntity = CartRepositoryInterface.findByEmailAndProductstatus(orderdata.getEmail(), "IN-CART");
+		//List<CartEntity> cartEntity = CartRepositoryInterface.findByEmailAndProductstatus(orderdata.getEmail(), "IN-CART");
 		OrderEntity order=new OrderEntity();  
 		order.setEmail(orderdata.getEmail());
 		order.setOrderdDate(date);
@@ -46,22 +46,17 @@ public class OrderService implements OrderServiceInterface{
 		
 		orderRepository.save(order);//order saved
 		
-		List<OrderEntity> order1 = orderRepository.findByEamil(order.getEmail(),"NOT DELIVERED-e");
+		List<Integer> order1 = orderRepository.findByEamil(orderdata.getEmail(),"NOT DELIVERED");
 		
-		int lengthOfOrder = order1.size()-1;
-		
-		Long orderdId = order1.get(lengthOfOrder).getOrderId() ;
-		String orderSatus = "ORDERD";
-		String email =orderdata.getEmail();
-		
-		System.out.println("sasi"+orderdId	);
-		
-		
-		for(CartEntity cart : cartEntity) {
-			System.out.println(cart);
-			 //cart.setOrderIdEntity(order);
-			 CartRepositoryInterface.updateOrderId(orderdId, orderSatus, email, "IN-CART");
-		 }
+		if(order1 != null) {
+			int lengthOfOrder = order1.size()-1;
+			Long orderdId = order1.get(lengthOfOrder).longValue() ;
+			String orderSatus = "ORDERD";
+			String email =orderdata.getEmail();
+			System.out.println("sasi"+orderdId	);
+			CartRepositoryInterface.updateOrderId(orderdId, orderSatus, email, "IN-CART");
+		}
+		 
 		
 		return "order Placed";
 	}
