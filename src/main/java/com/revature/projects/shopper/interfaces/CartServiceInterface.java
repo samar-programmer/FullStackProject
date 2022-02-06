@@ -7,6 +7,8 @@ import com.revature.projects.shopper.utility.CartDTO;
 
 public interface CartServiceInterface {
 
-	List<CartDTO> getCartDetails();
+	List<CartDTO> getCartDetails(String email);
+
+	String addProductCartService(CartEntity cartProduct);
 
 }
