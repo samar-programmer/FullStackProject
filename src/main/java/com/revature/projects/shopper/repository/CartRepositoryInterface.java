@@ -12,4 +12,9 @@ public interface CartRepositoryInterface extends JpaRepository<CartEntity, Long>
 	
 	@Query( value = "SELECT * FROM CART_TABLE u WHERE u.email =:email and u.productstatus =:productstatus",  nativeQuery = true)
 	List<CartEntity> findByEmailAndProductstatus(@Param("email") String email, @Param("productstatus") String productstatus);
+	
+	
+	
+	
+	
 }
