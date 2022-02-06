@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.razorpay.*;
-
+import com.revature.projects.shopper.dto.OrderDetail;
 import com.revature.projects.shopper.dto.PaymentInfoDTO;
 
 
@@ -17,8 +17,9 @@ import com.revature.projects.shopper.dto.PaymentInfoDTO;
 public class PaymentController {
 	
 	@PostMapping("/makePayment")
-	public String makePaymentController(@RequestBody PaymentInfoDTO paymentInfo){
+	public OrderDetail makePaymentController(@RequestBody PaymentInfoDTO paymentInfo){
 		int amount=Integer.parseInt(paymentInfo.get_amount());
+		OrderDetail orderdetail=new OrderDetail();
 		Order order = null;
 		try {
 			RazorpayClient client=	new RazorpayClient("rzp_test_eKMQiTe1MYTomX", "wmTBFD0Z0ujoc8cC2iK8c6Am");
@@ -33,13 +34,17 @@ public class PaymentController {
 			System.out.println(order);
 			
 			
+			orderdetail.setOrderId(order.get("id"));
+			orderdetail.setOrederStatus(order.get("status"));
+			orderdetail.setOrederAmount(order.get("amount"));
+			
 			
 		} catch (RazorpayException e) {
 			e.printStackTrace();
 		}
 	
 		
-		return order.toString();
+		return orderdetail;
 	}
 	
 }

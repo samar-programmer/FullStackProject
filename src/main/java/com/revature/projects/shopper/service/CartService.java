@@ -25,10 +25,10 @@ public class CartService implements CartServiceInterface{
 
 
 	@Override
-	public List<CartDTO> getCartDetails() {
+	public List<CartDTO> getCartDetails(String email) {
 		// TODO Auto-generated method stub
 		List<CartDTO> cartDtos = new ArrayList() ;
-		 List<CartEntity> cartEntity = CartRepositoryInterface.findByEmailAndProductstatus("sasi@gmail.com", "IN-CART");
+		 List<CartEntity> cartEntity = CartRepositoryInterface.findByEmailAndProductstatus(email, "IN-CART");
 		  
 		 for(CartEntity cart : cartEntity) {
 			 PrdouctsEntity prdouctsEntity = productRepositoryInterface.findByIdForImgUrl(cart.getProductId());
@@ -41,6 +41,20 @@ public class CartService implements CartServiceInterface{
 		 }
 		 
 		 return cartDtos;
+	}
+
+
+	@Override
+	public String addProductCartService(CartEntity cartProduct) {
+		try {
+			CartRepositoryInterface.save(cartProduct);
+			return "product added";
+		}catch(Exception e){
+			e.printStackTrace();
+			return "product add fail";
+		}
+	
+		
 	}
 
 }
