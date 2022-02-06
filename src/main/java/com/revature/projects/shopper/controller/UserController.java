@@ -48,7 +48,7 @@ public class UserController {
 
 	
 	@PostMapping("/signUp")
-	public String signUpProfile(@RequestBody EcommerceUser ecommerceuser) throws Exception
+	public String signUpProfile(@RequestBody EcommerceUser ecommerceuser) 
 	{
 		int i=0;
 		String tempEmailId=ecommerceuser.getEmail();
@@ -59,7 +59,6 @@ public class UserController {
 		if(tempEmailId !=null && !"".equals(tempEmailId))
 		{
 			ecommerceuser=service.fetchUserByEmailId(tempEmailId);
-		//	System.out.println(ecommerceuser.getPassword());
 			if(ecommerceuser==null)
 			{
 				
@@ -72,17 +71,13 @@ public class UserController {
 			}
 			else
 			{
-				throw new Exception("User with "+tempEmailId+" already Exists");
+				return "User with "+tempEmailId+" already Exists";
 			}
 			}
-		
-		
-		
-		
+				
 		
 		if(i>0)
 		{
-			//System.out.println(ecommerceuser.getPassword());
 			
 		return "User Signed UP";
 		}
@@ -96,7 +91,7 @@ public class UserController {
 	
 	@PostMapping("/signIn")
 	
-	public String signInProfile(@RequestBody EcommerceUser ecommerceuser) throws Exception
+	public String signInProfile(@RequestBody EcommerceUser ecommerceuser) 
 	{
 		String tempEmailId=ecommerceuser.getEmail();
 		String tempPass=ecommerceuser.getPassword();
@@ -108,8 +103,6 @@ public class UserController {
 		
 			if(tempEmailId.equals("Admin@gmail.com"))
 			{
-				//request.getSession().setAttribute("user", tempEmailId);
-				System.out.println("hello admin");
 			
 			ecommerceuser=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
 			if(ecommerceuser!=null)
@@ -121,11 +114,6 @@ public class UserController {
 			}
 			else
 			{
-				System.out.println("hello user");
-				System.out.println(tempEmailId);
-				//session=request.getSession(true);
-				//session.setAttribute("user",tempEmailId);
-				//request.getSession().getAttribute("tempEmailId");
 				
 				ecommerceuser=service.fetchUserByEmailIdAndPassword(tempEmailId,tempPass);
 				if(ecommerceuser!=null)
@@ -152,9 +140,11 @@ public class UserController {
 		}
 		else
 		{
-		 throw new Exception("login failed!!!! SIGN UP FIRST");
+		 return "login failed!!!! SIGN UP FIRST Or Wrong PassWord";
 		}
 	}
+	
+	
 	
 	
 	@PostMapping("/send-otp")
@@ -178,12 +168,10 @@ public class UserController {
 		
 		if(flag)
 		{
-			//session.setAttribute("otp", otp);
-			return "verify otp";
+			return "Verify";
 		}
 		else
 		{
-			//session.setAttribute("message","Check Your Email Id !!!" );
 		return "Wrong Credentials";
 		}
 	}
@@ -208,7 +196,7 @@ public class UserController {
 		
 		if(ecommerceuser!=null)
 		{
-		return "OTP	 Verified !!! See Your Email For Password";
+		return "Success";
 		}
 		else
 		{
@@ -232,9 +220,7 @@ public class UserController {
 
 		Long mobilenumber=ecommerceuser.getMobilenumber();
 		
-		
-		
-			int i=service.updateUserByEmailId(email,password,firstname,lastname,mobilenumber);
+		int i=service.updateUserByEmailId(email,password,firstname,lastname,mobilenumber);
 
 		
 		if(i!=0)
@@ -253,11 +239,6 @@ public class UserController {
 	public String saveAddress(@RequestBody EcommerceAddress ecommerceaddress)
 	{
 		System.out.println(ecommerceaddress.getDoorno());
-		
-//		EcommerceUser eu=new EcommerceUser();
-//		eu.setUserid(userid);
-//		ecommerceaddress.setUserdata(eu);
-//		System.out.println(userid);
 		int i=service.saveAddressService(ecommerceaddress);
 		
 		if(i!=0)
@@ -273,16 +254,6 @@ public class UserController {
 	
 	}
 	
-	
-	
-	
-		@GetMapping("/logOut")
-		public String logout(){
-			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-			HttpSession session = request.getSession();
-			session.invalidate(); 
-			return "LogOut Successfull" ;
-		}
 
 
 }

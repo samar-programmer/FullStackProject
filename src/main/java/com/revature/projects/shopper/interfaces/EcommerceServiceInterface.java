@@ -5,7 +5,7 @@ import com.revature.projects.shopper.model.EcommerceUser;
 
 public interface EcommerceServiceInterface {
 
-	//public EcommerceUser createProfileService(EcommerceUser user);
+	
 
 	public EcommerceUser fetchUserByEmailId(String tempEmailId);
 
@@ -16,7 +16,7 @@ public interface EcommerceServiceInterface {
 
 	public boolean sendEmail(String subject, String message, String to);
 
-	//public EcommerceUser updateUserByEmailId(String tempEmailId);
+
 
 
 	public int saveStatus(EcommerceUser ecommerceuser1);
@@ -40,6 +40,6 @@ public interface EcommerceServiceInterface {
 
 
 
-	//public int updateUserByEmailId(String email);
+	
 
 }
