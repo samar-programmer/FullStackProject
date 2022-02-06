@@ -32,14 +32,14 @@ public class CartEntity {
 	private String productstatus;
 	
 	
-	@ManyToOne(
-			cascade = CascadeType.ALL
-			)
-	@JoinColumn(
-				name="order_Id",
-				referencedColumnName = "orderId"
-			)
-	private OrderEntity orderIdEntity;
+//	@ManyToOne(
+//			cascade = CascadeType.ALL
+//			)
+//	@JoinColumn(
+//				name="order_Id",
+//				referencedColumnName = "orderId"
+//			)
+	private long orderId;
 	
 	
 	

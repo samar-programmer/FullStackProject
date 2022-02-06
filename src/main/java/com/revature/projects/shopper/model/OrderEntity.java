@@ -30,8 +30,8 @@ public class OrderEntity {
 	private String status;
 	private String orderdDate;
 	
-	@OneToMany(mappedBy = "orderIdEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	private List<CartEntity> cartId;
+//	@OneToMany(mappedBy = "orderIdEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//	private List<CartEntity> cartId;
 	
 	
 }

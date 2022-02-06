@@ -15,7 +15,7 @@ import com.revature.projects.shopper.model.OrderEntity;
 import com.revature.projects.shopper.repository.CartRepositoryInterface;
 import com.revature.projects.shopper.repository.OrderRepository;
 @Service
-@Transactional
+
 public class OrderService implements OrderServiceInterface{
 	
 	@Autowired
@@ -42,13 +42,25 @@ public class OrderService implements OrderServiceInterface{
 		order.setOrderdDate(date);
 		order.setStatus("NOT DELIVERED");
 		order.setTotalOrderPrice(orderdata.getTotalPrice());
-		order.setCartId(cartEntity);
+		//order.setCartId(cartEntity);
 		
-		orderRepository.save(order);
+		orderRepository.save(order);//order saved
+		
+		List<OrderEntity> order1 = orderRepository.findByEamil(order.getEmail(),"NOT DELIVERED");
+		
+		int lengthOfOrder = order1.size()-1;
+		
+		Long orderdId = order1.get(lengthOfOrder).getOrderId() ;
+		String orderSatus = "ORDERD";
+		String email =orderdata.getEmail();
+		
+		System.out.println("sasi"+orderdId	);
+		
 		
 		for(CartEntity cart : cartEntity) {
-			 cart.setOrderIdEntity(order);
-			 CartRepositoryInterface.saveAndFlush(cart);
+			System.out.println(cart);
+			 //cart.setOrderIdEntity(order);
+			 CartRepositoryInterface.updateOrderId(orderdId, orderSatus, email, "IN-CART");
 		 }
 		
 		return "order Placed";

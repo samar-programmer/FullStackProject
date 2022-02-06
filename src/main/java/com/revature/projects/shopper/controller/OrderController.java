@@ -32,7 +32,7 @@ public class OrderController {
 	
 	@PostMapping("/setOrder")
 	public String setOrder(@RequestBody OrderDTO orderdata) {
-		String email="aa@gmail.com";
+		System.out.println("sasi");
 		String result=orderServiceInterface.setOrderService(orderdata);
 		return result;
 	}
