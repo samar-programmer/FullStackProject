@@ -26,8 +26,6 @@ public EcommerceUser fetchUserByEmailIdAndPassword(@Param("email")String email, 
 
 @Modifying
 @Query("update com.revature.projects.shopper.model.EcommerceUser eu set eu.password=:password,eu.firstname=:firstname,eu.lastname=:lastname,eu.mobilenumber=:mobilenumber where eu.email=:email")
-
-//@Query(value="update ecommerce_user eu set eu.password=:password,eu.firstname=:firstname,eu.lastname=:lastname,eu.address=:address,eu.mobilenumber=:mobilenumber where eu.email=:email", nativeQuery=true)
 public int updateUserByEmailId(@Param("email")String email, @Param("password")String password,@Param("firstname") String firstname,@Param("lastname") String lastname, @Param("mobilenumber") Long mobilenumber);
 
 

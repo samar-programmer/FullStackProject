@@ -41,8 +41,6 @@ public class UserController {
 	
 	Random random=new Random(1000);
 	
-	
-	
 	HttpServletRequest request; 
 	HttpSession session;
 
@@ -56,36 +54,41 @@ public class UserController {
 		
 	
 		
-		if(tempEmailId !=null && !"".equals(tempEmailId))
+		if(tempEmailId !=null)
 		{
 			ecommerceuser=service.fetchUserByEmailId(tempEmailId);
 			if(ecommerceuser==null)
 			{
-				
-				ecommerceuser1.setEmail(tempEmailId);
-				ecommerceuser1.setPassword(tempPass);
-				System.out.println(ecommerceuser1.getPassword());
-				System.out.println("Hello there");
-				 i=service.signUpProfileService(ecommerceuser1);
+				System.out.println("not null");
+				EcommerceUser ecommerceuser2=new EcommerceUser();
+				ecommerceuser2.setEmail(tempEmailId);
+				ecommerceuser2.setPassword(tempPass);
+				System.out.println(ecommerceuser2.getPassword());
+				 i=service.signUpProfileService(ecommerceuser2);
+				 
+				 if(i>0)
+					{
+					return "User Signed UP";
+					}
+					
+					else
+					{
+						return "Could not able to Sign Up";
+					}
 				
 			}
 			else
 			{
 				return "User with "+tempEmailId+" already Exists";
 			}
-			}
+		
+		}
+		else {
+			return "Email Id Null";
+		}
 				
 		
-		if(i>0)
-		{
-			
-		return "User Signed UP";
-		}
 		
-		else
-		{
-			return "Could not able to Sign Up";
-	}
 	}
 	
 	
