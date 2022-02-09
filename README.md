@@ -42,7 +42,7 @@ Technologies Used:
               
   Getting Started
 
-             git clone https://github.com/samar-programmer/FullStackProject
+             git clone https://github.com/samar-programmer/FullStackProject/tree/sub1
 
 
   Contributors
